@@ -10,7 +10,10 @@
     "puppeteer": "^19.4.1"
   },
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "node index.js",
+    "build":
+  },
   "author": "",
   "license": "ISC"
 }
