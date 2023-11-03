@@ -6,7 +6,7 @@ const getAllUsers = (req, res) => {
     sql.connect(config, (err) => {
         if (err) {
             console.error('Failed to connect to SQL Server:', err.message);
-            res.status(500).send('Failed to connect to SQL Server',err.message);
+            res.status(500).send(`Failed to connect to SQL Server: ${err}`);
         } else {
             const request = new sql.Request();
             request.query(query.getAllUser(), (err, result) => {
