@@ -6,11 +6,5 @@
             "source": "./index.js",
             "use":"@vercel/node"
         }
-    ],
-    "router":[
-        {
-            "src":"/(.*)",
-            "dest":"/"
-        }
     ]
 }
