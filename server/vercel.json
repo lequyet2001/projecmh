@@ -8,6 +8,10 @@
         {
             "src":"./src/router/(.*)",
             "dest":"./index.js"
+        },
+        {
+            "src":"./src/Controller/(.*)",
+            "dest":"./index.js"
         }
     ]
 }
