@@ -1,6 +1,9 @@
 import React from "react"
 import { View, Text, StyleSheet } from 'react-native';
 import Form from '../Component/LoginForm';
+import { NavigationContainer } from '@react-navigation/native';
+
+
 
 export default function Login({navigation}:{navigation:any}): JSX.Element {
     const navigateToRegister = () => {
@@ -10,7 +13,7 @@ export default function Login({navigation}:{navigation:any}): JSX.Element {
     <View style={styles.container}>
       
       <Text style={styles.title}>Đăng nhập</Text>
-      <Form/>
+      <Form navigation={navigation}/>
       <Text dataDetectorType="link"  onPress={navigateToRegister}>
         Đăng ký
       </Text>

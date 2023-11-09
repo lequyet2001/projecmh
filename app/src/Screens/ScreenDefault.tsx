@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import Video from 'react-native-video';
 
-export default function Home({ navigation }: any): JSX.Element {
+export default function ScreenDefault({ navigation }: any): JSX.Element {
   const Login = (): void => {
     navigation.navigate("Login");
   }

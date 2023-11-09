@@ -39,5 +39,10 @@
   },
   "engines": {
     "node": ">=16"
-  }
+  },
+  "config": {
+    "server": {
+      "host": "localhost", 
+      "port": 3000 
+    }}
 }
