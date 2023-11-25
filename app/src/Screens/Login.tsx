@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 export default function Login({navigation}:{navigation:any}): JSX.Element {
     const navigateToRegister = () => {
-        navigation.navigate('Home'); // Điều này chuyển đổi sang màn hình đăng ký
+        navigation.navigate('Register'); // Điều này chuyển đổi sang màn hình đăng ký
       }
   return (
     <View style={styles.container}>
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginBottom: 20,
+    fontFamily:'Lemon'
   },
   input: {
     width: 300,

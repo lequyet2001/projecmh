@@ -29,9 +29,10 @@ import ScreenDefault from './src/Screens/ScreenDefault';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './src/Screens/Login';
-import Register from './src/Screens/Register';
+import Register from './src/Screens/SignUp';
+import Game from './src/Screens/Game';
 
-
+  
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -74,17 +75,19 @@ function App(): JSX.Element {
     <>
     <NavigationContainer>
       <Stack.Navigator>
+        
         <Stack.Screen name="ScreenDefault" options={{ headerShown: false }} component={ScreenDefault} />
         <Stack.Screen name="Login" options={{ headerShown: true }} component={Login} />
         <Stack.Screen name="Register" component={Register}/>
         <Stack.Screen name="Home" component={Home}/>
+        <Stack.Screen name="Game" options={{headerShown:true}} component={Game}/>
       </Stack.Navigator>
-    {/* <Login/> */}
+   
 
     </NavigationContainer>
-    {/* <InputForm lable="ass" /> */}
+   
     </>
- 
+
   );
 }
 

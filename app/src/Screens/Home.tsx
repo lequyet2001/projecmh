@@ -1,10 +1,13 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import {Button, Text, View } from 'react-native'
 
-export default function Home() {
+export default function Home({navigation}:any) {
+  const handleLogin=()=>{
+    navigation.navigate('Game');
+  }
   return (
    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Home2</Text>
+     <Button title="Game" onPress={handleLogin} />
     </View>
   )
 }
