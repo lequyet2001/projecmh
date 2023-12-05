@@ -1,45 +1,71 @@
-import React from "react"
-import { View, Text, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, Dimensions } from 'react-native';
 import Form from '../Component/LoginForm';
-import { NavigationContainer } from '@react-navigation/native';
+import Description from "../Component/Description";
+import Button from "../Component/Button";
+import FormContainer from "../Component/FormContainer";
 
+export default function Login({ navigation }: { navigation: any }): JSX.Element {
+  const navigateToRegister = () => {
+    navigation.navigate('Register');
+  };
 
-
-export default function Login({navigation}:{navigation:any}): JSX.Element {
-    const navigateToRegister = () => {
-        navigation.navigate('Register'); // Điều này chuyển đổi sang màn hình đăng ký
-      }
   return (
-    <View style={styles.container}>
-      
-      <Text style={styles.title}>Đăng nhập</Text>
-      <Form navigation={navigation}/>
-      <Text dataDetectorType="link"  onPress={navigateToRegister}>
-        Đăng ký
-      </Text>
-    </View>
+    // <ImageBackground source={require('../../assets/image1.png')} style={styles.backgroundImage}>
+    <FormContainer>
+      <ScrollView contentContainerStyle={styles.container}>
+      <Description width={180} >
+           Login
+          </Description>
+        <Form navigation={navigation} />
+        <View style={styles.registerContainer}>
+          <Text style={styles.registerText}>
+            Do not have an account?
+          </Text>
+          <Button onPress={navigateToRegister} styleButton={styles.button} sytleText={styles.text} title="Sign Up" />
+        </View>
+      </ScrollView>
+    </FormContainer>
+    // </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
+    flexGrow: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center', // Center content horizontally
+    height: Dimensions.get('window').height - 50,
+  },
+
+  registerContainer: {
     alignItems: 'center',
-    paddingTop:20,
-    paddingBottom:20,
+    marginTop: 20,
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-    fontFamily:'Lemon'
-  },
-  input: {
-    width: 300,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
+  registerText: {
+    fontFamily: 'Lemon Regular',
+    color: 'black',
+    textDecorationLine: 'none',
+    textAlign: 'center',
     marginBottom: 10,
-    paddingLeft: 10,
+  },
+  button: {
+    width: Dimensions.get('window').width / 1.5,
+    height: 140 / 3,
+    backgroundColor: '#FAED92',
+    elevation: 8,
+    borderRadius: 30,
+    borderColor: '#FFA5F6',
+    borderWidth: 5,
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 20,
+    color: '#fff',
+    textShadowColor: '#F15C56',
+    textShadowOffset: { width: 5, height: 0 },
+    textShadowRadius: 1,
+    fontFamily: 'Lemon Regular',
+    textAlign: 'center',
   },
 });

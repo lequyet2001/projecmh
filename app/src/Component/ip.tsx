@@ -1,4 +1,2 @@
-import { getIPV4Address } from 'react-native-network-info';
 
-
-export const ip=getIPV4Address();
+export const ip='192.168.1.33';

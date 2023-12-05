@@ -2,8 +2,32 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "assets/fonts/Anton Regular.ttf",
+      "sha1": "49243712633711db3b673d0b03536e0180cd7ddb"
+    },
+    {
+      "path": "assets/fonts/Cantarell Bold Italic.ttf",
+      "sha1": "4bbc39d36a3e06552e10a08fcf6fea32ccf4a05a"
+    },
+    {
+      "path": "assets/fonts/Cantarell Bold.ttf",
+      "sha1": "78a8bb9db04085d7006c5cbfa4dff67226300e26"
+    },
+    {
+      "path": "assets/fonts/Cantarell Italic.ttf",
+      "sha1": "9fcd2ad085d2704fd62aabdac2ab00316857fc6c"
+    },
+    {
+      "path": "assets/fonts/Cantarell.ttf",
+      "sha1": "7976dd622859dda6eb6bee224943d651fda9b40b"
+    },
+    {
       "path": "assets/fonts/Lemon Regular.ttf",
       "sha1": "dab9016bfd7382b6eb5725a1f3a96e5578495566"
+    },
+    {
+      "path": "assets/fonts/Lobster Regular.ttf",
+      "sha1": "120c751cd7a77174037c2409ab883ef7efc5edbb"
     },
     {
       "path": "assets/fonts/Lora Italic.ttf",

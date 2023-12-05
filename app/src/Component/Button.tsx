@@ -9,15 +9,19 @@ interface ButtonProps {
     sytleText?:Object;
     onPress?:()=>void;
     title:string;
-    key?:number;
+    key?:string;
+    styleText2?:Object;
 }
 
 
-function Button({styleButton,sytleText,onPress,title,key}:ButtonProps) {
+function Button({styleButton,sytleText,onPress,title,styleText2}:ButtonProps) {
     return (
         
-            <TouchableOpacity style={styleButton} key={key} onPress={onPress}>   
+            <TouchableOpacity style={styleButton} onPress={onPress}>   
+           
+
                 <Text style={sytleText}>{title}</Text>
+            
             </TouchableOpacity>
     
     )

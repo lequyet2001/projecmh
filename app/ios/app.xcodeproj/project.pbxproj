@@ -16,6 +16,12 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		067CB6CF22A24569AB93A34B /* Lemon Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A6F4EF9745A41DD8CBC74D1 /* Lemon Regular.ttf */; };
 		C3812FC9C61D4BD9815B660C /* Lora Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F228CA4372CC4E87997346DD /* Lora Italic.ttf */; };
+		FF5125404A8441FA89239648 /* Cantarell Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F510AFFE6DA4363B3336F6D /* Cantarell Bold Italic.ttf */; };
+		BA3E36DE553246AE9371E071 /* Cantarell Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FFABE9845124AE28FF54FC8 /* Cantarell Bold.ttf */; };
+		5ABFFBE13B9042C3B4B3D9CC /* Cantarell Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2111AA07B860405F88A1B073 /* Cantarell Italic.ttf */; };
+		A809A948645841F997BB53D0 /* Anton Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 737EDE6BDEAA4ABAB243DA9E /* Anton Regular.ttf */; };
+		0A343DE3418C4ADB93A0681F /* Cantarell.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F8AAC703CA940DC96AC5092 /* Cantarell.ttf */; };
+		44099F4F9BFA4926AEDA11A7 /* Lobster Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 98739B7C143F4A37A8816F83 /* Lobster Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +54,12 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		3A6F4EF9745A41DD8CBC74D1 /* Lemon Regular.ttf */ = {isa = PBXFileReference; name = "Lemon Regular.ttf"; path = "../assets/fonts/Lemon Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		F228CA4372CC4E87997346DD /* Lora Italic.ttf */ = {isa = PBXFileReference; name = "Lora Italic.ttf"; path = "../assets/fonts/Lora Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2F510AFFE6DA4363B3336F6D /* Cantarell Bold Italic.ttf */ = {isa = PBXFileReference; name = "Cantarell Bold Italic.ttf"; path = "../assets/fonts/Cantarell Bold Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5FFABE9845124AE28FF54FC8 /* Cantarell Bold.ttf */ = {isa = PBXFileReference; name = "Cantarell Bold.ttf"; path = "../assets/fonts/Cantarell Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2111AA07B860405F88A1B073 /* Cantarell Italic.ttf */ = {isa = PBXFileReference; name = "Cantarell Italic.ttf"; path = "../assets/fonts/Cantarell Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		737EDE6BDEAA4ABAB243DA9E /* Anton Regular.ttf */ = {isa = PBXFileReference; name = "Anton Regular.ttf"; path = "../assets/fonts/Anton Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9F8AAC703CA940DC96AC5092 /* Cantarell.ttf */ = {isa = PBXFileReference; name = "Cantarell.ttf"; path = "../assets/fonts/Cantarell.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		98739B7C143F4A37A8816F83 /* Lobster Regular.ttf */ = {isa = PBXFileReference; name = "Lobster Regular.ttf"; path = "../assets/fonts/Lobster Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +170,12 @@
 			children = (
 				3A6F4EF9745A41DD8CBC74D1 /* Lemon Regular.ttf */,
 				F228CA4372CC4E87997346DD /* Lora Italic.ttf */,
+				2F510AFFE6DA4363B3336F6D /* Cantarell Bold Italic.ttf */,
+				5FFABE9845124AE28FF54FC8 /* Cantarell Bold.ttf */,
+				2111AA07B860405F88A1B073 /* Cantarell Italic.ttf */,
+				737EDE6BDEAA4ABAB243DA9E /* Anton Regular.ttf */,
+				9F8AAC703CA940DC96AC5092 /* Cantarell.ttf */,
+				98739B7C143F4A37A8816F83 /* Lobster Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -261,6 +279,12 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				067CB6CF22A24569AB93A34B /* Lemon Regular.ttf in Resources */,
 				C3812FC9C61D4BD9815B660C /* Lora Italic.ttf in Resources */,
+				FF5125404A8441FA89239648 /* Cantarell Bold Italic.ttf in Resources */,
+				BA3E36DE553246AE9371E071 /* Cantarell Bold.ttf in Resources */,
+				5ABFFBE13B9042C3B4B3D9CC /* Cantarell Italic.ttf in Resources */,
+				A809A948645841F997BB53D0 /* Anton Regular.ttf in Resources */,
+				0A343DE3418C4ADB93A0681F /* Cantarell.ttf in Resources */,
+				44099F4F9BFA4926AEDA11A7 /* Lobster Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,6 +4,8 @@ import axios from 'axios';
 import CustomAlert from './CustomAlert';
 import Button from './Button';
 import { ip } from './ip';
+import LableInput from './LableInput';
+
 
 interface User {
   username: string;
@@ -30,7 +32,6 @@ export default function RegisterForm({ navigation }: { navigation: any }): JSX.E
         showAlert('Vui lòng nhập đầy đủ thông tin');
         return;
       }
-
       const emailCheck = await axios.get(`http://${ip}:3000/api/users/EmailCheck?email=${email}`);
 
       if (emailCheck.data.status === 200) {
@@ -76,41 +77,55 @@ export default function RegisterForm({ navigation }: { navigation: any }): JSX.E
     ]);
     setAlertVisible(true);
   };
-  const a=[
+  const a = [
     {
-      placeholder:"Tên người dùng",
-      value:username,
-      onChangeText:(text:string)=>{setUsername(text)}
+      placeholder: "Tên người dùng",
+      value: username,
+      onChangeText: (text: string) => { setUsername(text) },
+      secureTextEntry: false
     },
     {
-      placeholder:"Mật khẩu",
-      value:password,
-      onChangeText:(text:string)=>{setPassword(text)}
+      placeholder: "Mật khẩu",
+      value: password,
+      onChangeText: (text: string) => { setPassword(text) },
+      secureTextEntry: true
     },
     {
-      placeholder:"Nhập lại mật khẩu",
-      value:password2,
-      onChangeText:(text:string)=>{setPassword2(text)}
+      placeholder: "Nhập lại mật khẩu",
+      value: password2,
+      onChangeText: (text: string) => { setPassword2(text) },
+      secureTextEntry: true
     },
     {
-      placeholder:"Email",
-      value:email,
-      onChangeText:(text:string)=>{setEmail(text)}
+      placeholder: "Email",
+      value: email,
+      onChangeText: (text: string) => { setEmail(text) },
+      secureTextEntry: false
     }
   ]
   return (
     <View style={styles.container}>
-     {a.map((item,index)=>{
-        return(
-          <TextInput
-          style={styles.input}
-          placeholder={item.placeholder}
-          value={item.value}
-          onChangeText={item.onChangeText}
-        />
-        )
-     })}
-      <Button title="Đăng ký" onPress={handleSignin} />
+      <View style={{height:300}}>
+
+        {a.map((item, index) => {
+          return (
+            <LableInput
+              placeholder={item.placeholder}
+              style={styles.input}
+              secureTextEntry={item.secureTextEntry}
+              value={item.value}
+              onChangeText={item.onChangeText}
+              Lable={item.placeholder}
+            />
+          )
+        })}
+      </View>
+      <Button
+        title="Đăng ký"
+        onPress={handleSignin}
+        styleButton={styles.button}
+        sytleText={styles.text}
+      />
       <CustomAlert
         visible={isAlertVisible}
         onClose={() => setAlertVisible(false)}
@@ -129,13 +144,39 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    top:-30
   },
   input: {
-    width: 300,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 10,
+    top: 35,
+    left: 20,
+    fontSize: 20,
+    fontFamily: 'Cantarell',
+  },
+  button: {
+    width: 742.5/3.5,
+    height:140/3,
+    backgroundColor: '#FAED92',
+    elevation: 8,
+    borderRadius: 30,
+    borderColor: '#FFA5F6',
+    borderWidth: 5,
+    display: 'flex',
+    justifyContent: 'center',
+    // alignItems: 'center'
+    top:20
+  },
+  text: {
+    fontSize: 20,
+    // fontWeight: 'bold',
+    color: 'white', // Màu chữ
+    textShadowColor: '#F15C56', // Màu viền chữ
+    textShadowOffset: { width: 5, height: 0 }, // Độ lệch của viền chữ
+    textShadowRadius: 1, // Bán kính mờ của viền chữ
+    paddingBottom: 10,
+  
+    fontFamily: 'Lemon Regular',
+    textAlign: 'center',
+    bottom: -5,
+    left: -4,
   },
 });

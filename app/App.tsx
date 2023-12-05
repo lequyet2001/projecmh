@@ -4,7 +4,7 @@
  *
  * @format
  */
-
+// import 'react-native-gesture-handler';
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -75,11 +75,10 @@ function App(): JSX.Element {
     <>
     <NavigationContainer>
       <Stack.Navigator>
-        
+        <Stack.Screen name="Home" options={{headerShown:false}} component={Home}/>
         <Stack.Screen name="ScreenDefault" options={{ headerShown: false }} component={ScreenDefault} />
-        <Stack.Screen name="Login" options={{ headerShown: true }} component={Login} />
-        <Stack.Screen name="Register" component={Register}/>
-        <Stack.Screen name="Home" component={Home}/>
+        <Stack.Screen name="Login" options={{ headerShown: false }} component={Login} />
+        <Stack.Screen name="Register" options={{headerShown:false}} component={Register}/>
         <Stack.Screen name="Game" options={{headerShown:true}} component={Game}/>
       </Stack.Navigator>
    
