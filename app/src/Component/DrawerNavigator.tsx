@@ -80,7 +80,6 @@ export default function CustomDrawerContent(props: any) {
                 }} />
             <DrawerItem
                 label="Achievements"
-                
                 onPress={() => setAlertVisible(true)}
                 pressColor='#0010'
                 labelStyle={{

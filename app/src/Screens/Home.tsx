@@ -29,8 +29,6 @@ export default function Home({ navigation }: any) {
 
   function Home2({ navigation }: { navigation: any }) {
     return (
-
-
       <FormContainer>
         <View style={{ height: Dimensions.get('window').height }}>
             <Description >
@@ -59,7 +57,6 @@ export default function Home({ navigation }: any) {
           </View>
 
           <MaterialIcons name="menu" size={24} color="black" style={styles.buttonContainer} onPress={() => navigation.openDrawer()} />
-          {/* <Button key={"X"} title={`${open ? 'X' : 'O'} `} onPress={()=>navigation.openDrawer()} styleButton={styles.buttonContainer} /> */}
         </View>
       </FormContainer>
     )
@@ -69,42 +66,35 @@ export default function Home({ navigation }: any) {
   const buttonGroup = [{
     id: 'Vacabulary',
     title: 'Vacabulary',
-    onPress: () => { console.log('Vacabulary') },
+    onPress: () => { navigation.navigate('Vocabulary') },
     styleButton: styles.button,
     styleText: styles.text,
 
   }, {
     id: 'Grammar',
     title: 'Grammar',
-    onPress: () => { console.log('Grammar') },
+    onPress: () => { navigation.navigate('Grammar') },
     styleButton: styles.button,
     styleText: styles.text,
   }, {
     id: 'Dictionary',
     title: 'Dictionary',
-    onPress: () => { console.log('Dictionary') },
+    onPress: () => { navigation.navigate('Dictionary')},
     styleButton: styles.button,
     styleText: styles.text,
   },
 
   {
-    id: 'Setting',
-    title: 'Setting',
-    onPress: () => { console.log('Setting') },
-    styleButton: styles.button,
-    styleText: styles.text,
-  },
-  {
     id: 'Number',
     title: 'Number',
-    onPress: () => { console.log('Number') },
+    onPress: () => { navigation.navigate('Number') },
     styleButton: styles.button,
     styleText: styles.text,
   },
   {
     id: 'Stories',
     title: 'Stories',
-    onPress: () => { console.log('Stories') },
+    onPress: () => { navigation.navigate('Stories') },
     styleButton: styles.button,
     styleText: styles.text,
 
@@ -121,6 +111,10 @@ export default function Home({ navigation }: any) {
         drawerStyle: {
           backgroundColor: '#561735',
           width: 300,
+          borderRadius:5,
+          borderRightColor:'#fff',
+          borderRightWidth:1,
+          // borderRightStyle:'dotted'
         },
         drawerActiveBackgroundColor: '#561735',
         drawerActiveTintColor: '#fff',

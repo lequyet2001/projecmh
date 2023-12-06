@@ -31,6 +31,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './src/Screens/Login';
 import Register from './src/Screens/SignUp';
 import Game from './src/Screens/Game';
+import Vocabulary from './src/Screens/ScreenMain/Vocabulary';
+import Grammar from './src/Screens/ScreenMain/Grammar';
+import Number from './src/Screens/ScreenMain/Number';
+import Stories from './src/Screens/ScreenMain/Stories';
+import Dictionary from './src/Screens/ScreenMain/Dictionary';
 
   
 type SectionProps = PropsWithChildren<{
@@ -80,6 +85,11 @@ function App(): JSX.Element {
         <Stack.Screen name="Login" options={{ headerShown: false }} component={Login} />
         <Stack.Screen name="Register" options={{headerShown:false}} component={Register}/>
         <Stack.Screen name="Game" options={{headerShown:true}} component={Game}/>
+        <Stack.Screen name="Vocabulary" options={{ headerShown: false }} component={Vocabulary} />
+        <Stack.Screen name="Dictionary" options={{ headerShown: false }} component={Dictionary} />
+        <Stack.Screen name="Stories" options={{ headerShown: false }} component={Stories} />
+        <Stack.Screen name="Number" options={{ headerShown: false }} component={Number} />
+        <Stack.Screen name="Grammar" options={{ headerShown: false }} component={Grammar} />
       </Stack.Navigator>
    
 

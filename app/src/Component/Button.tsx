@@ -8,20 +8,22 @@ interface ButtonProps {
     styleButton?:Object;
     sytleText?:Object;
     onPress?:()=>void;
-    title:string;
+    title?:string;
     key?:string;
     styleText2?:Object;
+    icon?:()=>React.ReactNode;
 }
 
 
-function Button({styleButton,sytleText,onPress,title,styleText2}:ButtonProps) {
+function Button({styleButton,sytleText,onPress,title,styleText2,icon}:ButtonProps) {
+    const a=icon?icon():null
+    
     return (
         
             <TouchableOpacity style={styleButton} onPress={onPress}>   
-           
-
-                <Text style={sytleText}>{title}</Text>
-            
+                {
+                title? <Text style={sytleText}>{title}</Text>:a
+            }
             </TouchableOpacity>
     
     )
