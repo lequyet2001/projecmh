@@ -1,30 +1,93 @@
 
-import { Dimensions, Text, View, StyleSheet, Image } from 'react-native'
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem, } from '@react-navigation/drawer';
+import { Dimensions, ScrollView, Text, View, StyleSheet, Image, Modal, TouchableOpacity } from 'react-native'
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import CustomAlert from './CustomAlert';
+import LableInput from './LableInput';
+// import { ScrollView } from 'react-native-reanimated/lib/typescript/Animated';
+import { DrawerModel } from './ModelScreens/ModelInformation';
 
 interface users {
     username: String;
     password: String;
-  }
-  interface array {
+}
+interface array {
     text: string;
     onPress: () => void;
-  }
+}
+
+
+
+
+
 export default function CustomDrawerContent(props: any) {
     const navigation = useNavigation();
     const [hover, setHover] = useState(false);
-    const [isAlertVisible, setAlertVisible] = useState(false);
+    const [isModelVisible, setModelVisible] = useState({
+        visible: false,
+        editVisible: false
+
+    });
 
     const [data, setData] = useState<users>();
     const [msg, setMsg] = useState<string>('');
     const [bt, setbt] = useState<array[]>([]);
+    const DrawerGroup = [
+        {
+            lable: 'Favorite',
+            // onPress: () => setModelVisible(true),
+            pressColor: '#fff1',
+            labelStyle: styles.labelStyle,
+            style: styles.style,
+            icon: () => {
+                return (<>
+                    <MaterialIcons name="bookmark" size={30} color="black" style={{ left: 15, color: 'white' }} />
+                </>)
+            }
+        },
+        {
+            lable: 'Achievements',
+            // onPress: () => setModelVisible(true),
+            pressColor: '#fff1',
+            labelStyle: styles.labelStyle,
+            style: styles.style,
+            icon: () => {
+                return (<>
+                    <MaterialIcons name="school" size={30} color="black" style={{ left: 15, color: 'white' }} />
+                </>)
+            }
+        },
+        {
+            lable: 'Information',
+            onPress: () => setModelVisible(true),
+            pressColor: '#fff1',
+            labelStyle: styles.labelStyle,
+            style: styles.style,
+            icon: () => {
+                return (<>
+                    <MaterialIcons name="info" size={30} color="black" style={{ left: 15, color: 'white' }} />
+                </>)
+            }
+        },
+        {
+            lable: 'Setting',
+            // onPress: () => setModelVisible(true),
+            pressColor: '#fff1',
+            labelStyle: styles.labelStyle,
+            style: styles.style,
+            icon: () => {
+                return (<>
+                    <MaterialIcons name="settings" size={30} color="black" style={{ left: 15, color: 'white' }} />
+                </>)
+            }
+        }
+    ]
+
 
     return (
-        <DrawerContentScrollView {...props} contentContainerStyle={{ ':hover':{backgroundColor:'back'}}}>
+        <DrawerContentScrollView {...props} contentContainerStyle={{ ':hover': { backgroundColor: 'back' } }}>
             <View style={{ height: 200, backgroundColor: '#561735', paddingTop: 10 }}>
                 <View style={{ display: 'flex', flexDirection: 'row', }}>
 
@@ -54,106 +117,50 @@ export default function CustomDrawerContent(props: any) {
                 </View>
             </View>
             <DrawerItemList {...props} />
+            {
+                DrawerGroup.map((item, index) => {
+                    return (
+                        <DrawerItem
+                            key={index}
+                            label={item.lable}
+                            onPress={item.onPress}
+                            pressColor={item.pressColor}
+                            labelStyle={item.labelStyle}
+                            style={item.style}
+                            icon={item.icon}
+                        />
+                    )
+                })
+            }
+            <DrawerModel
+                editOnPress={() => setModelVisible({visible:false,editVisible:true})}
+                editVisible={isModelVisible.editVisible}
+                editOnRequestClose={() => setModelVisible((prev) => ({ ...prev, editVisible: false }))}
 
-
-            
-            <DrawerItem
-                label="Favorite"
-                onPress={() => setAlertVisible(true)}
-                
-                pressColor='#fff1'
-                labelStyle={{
-                    fontSize: 20,
-                    color: 'white',
-                    fontFamily: 'Lemon Regular',
-                    left: 15,
-                }}
-                style={{
-                    backgroundColor: '#561735',
-                    width: '100%',
-                    left: -15,
-                }}
-                icon={() => {
-                    return (<>
-                        <MaterialIcons name="bookmark" size={30} color="black" style={{ left: 15,color:'white' }} />
-                    </>)
-                }} />
-            <DrawerItem
-                label="Achievements"
-                onPress={() => setAlertVisible(true)}
-                pressColor='#0010'
-                labelStyle={{
-                    fontSize: 20,
-                    color: 'white',
-                    fontFamily: 'Lemon Regular',
-                    left: 15,
-                    // backgroundColor:'#111'
-                }}
-                style={{
-                    backgroundColor: '#561735',
-                    width: '100%',
-                    left: -15,
-                }}
-                icon={() => {
-                    return (<>
-                        <MaterialIcons name="school" size={30} color="black" style={{ left: 15,color:'white' }} />
-                    </>)
-                }} />
-            <DrawerItem
-                label="Information"
-                onPress={() => setAlertVisible(true)}
-                pressColor='#0010'
-                labelStyle={{
-                    fontSize: 20,
-                    color: 'white',
-                    fontFamily: 'Lemon Regular',
-                    left: 15,
-                }}
-                style={{
-                    backgroundColor: '#561735',
-                    width: '100%',
-                    left: -15,
-                }}
-                icon={() => {
-                    return (<>
-                        <MaterialIcons name="info" size={30} color="black" style={{ left: 15,color:'white' }} />
-                    </>)
-                }} />
-            <DrawerItem
-                label="Setting"
-                onPress={() => setAlertVisible(true)}
-                pressColor='#0010'
-                labelStyle={{
-                    fontSize: 20,
-                    color: 'white',
-                    fontFamily: 'Lemon Regular',
-                    left: 15,
-                }}
-                style={{
-                    backgroundColor: '#561735',
-                    width: '100%',
-                    left: -15,
-                }}
-                icon={() => {
-                    return (<>
-                        <MaterialIcons name="settings" size={30} color="black" style={{left: 15,color:'white' }} />
-                    </>)
-                }} />
-
-
-            <CustomAlert
-                visible={isAlertVisible}
-                onClose={() => setAlertVisible(false)}
-                title="Thông báo"
-                msg={msg}
-                onConfirm={() => { setAlertVisible(false) }}
-                key={Math.random()}
-                array={[{
-                    text: 'Ok',
-                    onPress() {
-                      setAlertVisible(false)
-                    }
-                  }]}/>
+                onPress={() => setModelVisible((prev) => ({ ...prev, visible: false }))}
+                visible={isModelVisible.visible}
+                onRequestClose={() => setModelVisible((prev) => ({ ...prev, visible: false }))} 
+            />
         </DrawerContentScrollView>
     );
 }
+
+const styles = StyleSheet.create({
+    input: {
+        top: 35,
+        left: 20,
+        fontSize: 20,
+        fontFamily: 'Cantarell',
+    },
+    labelStyle: {
+        fontSize: 20,
+        color: 'white',
+        fontFamily: 'Lemon Regular',
+        left: 15,
+    },
+    style: {
+        backgroundColor: '#561735',
+        width: '100%',
+        left: -15,
+    },
+})

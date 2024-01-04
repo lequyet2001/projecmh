@@ -17,7 +17,8 @@ export default function Vocabulary({navigation}:any) {
 
   
 const buttonGroup=()=>{
-  return ( <View style={{
+  return ( 
+  <View style={{
     display: 'flex',
     justifyContent: 'center',
     height: 70,

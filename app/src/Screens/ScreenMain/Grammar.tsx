@@ -52,20 +52,12 @@ const buttonGroup=()=>{
       sytleText={styles.text}
     />
     <Button
+    ti={true}
       icon={() => {
         return (<>
-          <View style={{
-            borderColor: 'white',
-            borderWidth: 5,
-            borderRadius: 12.5,
-            backgroundColor: '#1B92FF',
-            width: 50,
-            height: 50,
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
+         
             <Image source={require('../../../assets/Home.png')} style={{ width: 30, height: 30 }} />
-          </View>
+          
         </>)
       }}
     />

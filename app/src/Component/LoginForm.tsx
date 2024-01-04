@@ -120,7 +120,6 @@ export default function Form({ navigation }: { navigation: any }): JSX.Element {
           Lable='Password'
         />
       </View>
-
       <Button title="Đăng nhập" onPress={handleLogin} styleButton={styles.button} sytleText={styles.text} />
       <CustomAlert
         visible={isAlertVisible}

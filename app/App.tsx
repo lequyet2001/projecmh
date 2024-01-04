@@ -36,6 +36,7 @@ import Grammar from './src/Screens/ScreenMain/Grammar';
 import Number from './src/Screens/ScreenMain/Number';
 import Stories from './src/Screens/ScreenMain/Stories';
 import Dictionary from './src/Screens/ScreenMain/Dictionary';
+import { DrawerModelEditAvatar } from './src/Component/ModelScreens/ModelInformation';
 
   
 type SectionProps = PropsWithChildren<{
@@ -78,7 +79,7 @@ function App(): JSX.Element {
   return (
 
     <>
-    <NavigationContainer>
+    {/* <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" options={{headerShown:false}} component={Home}/>
         <Stack.Screen name="ScreenDefault" options={{ headerShown: false }} component={ScreenDefault} />
@@ -93,8 +94,8 @@ function App(): JSX.Element {
       </Stack.Navigator>
    
 
-    </NavigationContainer>
-   
+    </NavigationContainer> */}
+    <DrawerModelEditAvatar visible={true} onRequestClose={false} />
     </>
 
   );

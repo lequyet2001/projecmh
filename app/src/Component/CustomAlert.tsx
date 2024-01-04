@@ -12,14 +12,14 @@ interface CustomAlertProps {
     array:array[]
     // backgroundcolor:string;
     // color:string;
-    key:number;
+    // key:number;
 }
 interface array{
     text:string;
     onPress:()=> void;
 }
 
-const CustomAlert: React.FC<CustomAlertProps> = ({ visible, onClose, title,key, msg, onConfirm ,array}) => {
+const CustomAlert: React.FC<CustomAlertProps> = ({ visible, onClose, title, msg, onConfirm ,array}) => {
    
     return (
         <Modal
@@ -38,7 +38,7 @@ const CustomAlert: React.FC<CustomAlertProps> = ({ visible, onClose, title,key, 
                         {
                             array.map((e,index) => {
                                 return <>
-                                   <Button key={key} title={e.text}  onPress={e.onPress} styleButton={styles.button} sytleText={styles.buttonText}/>
+                                   <Button title={e.text} key={e.text} onPress={e.onPress} styleButton={styles.button} sytleText={styles.buttonText}/>
                                 </>
                             })
 
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         // alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
     },
     modalView: {
         backgroundColor: 'white',
