@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Dimensions } from 'react-native';
 import axios from 'axios';
 import CustomAlert from './CustomAlert';
 import Button from './Button';
 import { ip } from './ip';
 import LableInput from './LableInput';
-
+import { useDispatch, useSelector } from 'react-redux';
+import * as signup from '../redux/Actions/signUpActions';
 
 interface User {
   username: string;
@@ -29,38 +30,32 @@ export default function RegisterForm({ navigation }: { navigation: any }): JSX.E
   const handleSignin = async (): Promise<void> => {
     try {
       if (username === '' || password === '' || password2 === '' || email === '') {
-        showAlert('Vui lòng nhập đầy đủ thông tin');
+        showAlert('Please enter complete information');
         return;
       }
-      const emailCheck = await axios.get(`http://${ip}:3000/api/users/EmailCheck?email=${email}`);
-
-      if (emailCheck.data.status === 200) {
-        const user = await axios.get(`http://${ip}:3000/api/users/UserCheck?username=${username}`);
-        if (user.data.status === 200) {
-          const response = await axios.post(`http://${ip}:3000/api/users/Signin`, {
+          const response = await axios.post(`http://${ip}:3000/api/users/Signup`, {
             username: username,
             password: password,
             password2: password2,
             email: email,
           });
-
-          if (response.data.status === 400 || response.data.status === 201) {
+          if(response.data.status==400){
             showAlert(response.data.msg);
             return;
           }
-
-          showAlert(response.data.msg, () => navigation.navigate('Login'));
-        } else {
-          showAlert(user.data.msg);
-        }
-      } else {
-        showAlert(emailCheck.data.msg);
-      }
+          showAlert(response.data.msg);
+          navigation.navigate('Login');
+      
+     
     } catch (error) {
+      
+      
       console.error('Error fetching data: ', error);
       // Handle error, show an alert, etc.
     }
   };
+
+
 
   const showAlert = (message: string, callback?: () => void): void => {
     setMsg(message);
@@ -105,13 +100,17 @@ export default function RegisterForm({ navigation }: { navigation: any }): JSX.E
   ]
   return (
     <View style={styles.container}>
-      <View style={{height:300}}>
+      <View style={{
+        height:Dimensions.get('window').height*0.38,
+        justifyContent:'space-between'
+        }}>
 
         {a.map((item, index) => {
           return (
             <LableInput
+              key={index}
               placeholder={item.placeholder}
-              style={styles.input}
+              style={{}}
               secureTextEntry={item.secureTextEntry}
               value={item.value}
               onChangeText={item.onChangeText}
@@ -129,7 +128,7 @@ export default function RegisterForm({ navigation }: { navigation: any }): JSX.E
       <CustomAlert
         visible={isAlertVisible}
         onClose={() => setAlertVisible(false)}
-        title="Thông báo"
+        title={msg}
         msg={msg}
         onConfirm={() => setAlertVisible(false)}
         key={Math.random()}
@@ -142,19 +141,19 @@ export default function RegisterForm({ navigation }: { navigation: any }): JSX.E
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-    top:-30
+    // top:-30
   },
   input: {
-    top: 35,
+    top: 25,
     left: 20,
     fontSize: 20,
     fontFamily: 'Cantarell',
   },
   button: {
-    width: 742.5/3.5,
-    height:140/3,
+    width: Dimensions.get('window').width * 0.5,
+    height: Dimensions.get('window').height * 0.065,
     backgroundColor: '#FAED92',
     elevation: 8,
     borderRadius: 30,

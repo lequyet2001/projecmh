@@ -37,55 +37,28 @@ import Number from './src/Screens/ScreenMain/Number';
 import Stories from './src/Screens/ScreenMain/Stories';
 import Dictionary from './src/Screens/ScreenMain/Dictionary';
 import { DrawerModelEditAvatar } from './src/Component/ModelScreens/ModelInformation';
+import { Provider,useSelector } from 'react-redux';
+import { legacy_createStore } from 'redux';
+import rootReducer from './src/redux/rootReducer';
+import GameLevel from './src/Screens/GameLevel';
 
-  
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
 const Stack = createNativeStackNavigator();
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const store=legacy_createStore(rootReducer);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+function App(): JSX.Element {
 
   return (
 
     <>
-    {/* <NavigationContainer>
+    <Provider store={store}>
+    <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" options={{headerShown:false}} component={Home}/>
         <Stack.Screen name="ScreenDefault" options={{ headerShown: false }} component={ScreenDefault} />
+        <Stack.Screen name="Home" options={{headerShown:false}} component={Home}/>
+        <Stack.Screen name="GameLevel" options={{headerShown:false}} component={GameLevel}/>
         <Stack.Screen name="Login" options={{ headerShown: false }} component={Login} />
         <Stack.Screen name="Register" options={{headerShown:false}} component={Register}/>
-        <Stack.Screen name="Game" options={{headerShown:true}} component={Game}/>
+        <Stack.Screen name="Game" options={{headerShown:false}} component={Game}/>
         <Stack.Screen name="Vocabulary" options={{ headerShown: false }} component={Vocabulary} />
         <Stack.Screen name="Dictionary" options={{ headerShown: false }} component={Dictionary} />
         <Stack.Screen name="Stories" options={{ headerShown: false }} component={Stories} />
@@ -94,8 +67,9 @@ function App(): JSX.Element {
       </Stack.Navigator>
    
 
-    </NavigationContainer> */}
-    <DrawerModelEditAvatar visible={true} onRequestClose={false} />
+    </NavigationContainer> 
+    {/* <DrawerModelEditAvatar visible={true} onRequestClose={false} /> */}
+    </Provider>
     </>
 
   );

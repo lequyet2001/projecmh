@@ -297,7 +297,84 @@ const buttonGroup=()=>{
             </Text>
           </View>
         </TouchableOpacity>
-       
+        <TouchableOpacity onPress={toggleComponentVisibility}>
+          <View
+            style={{
+              backgroundColor: '#E4E2E2',
+              width:170,
+              height: 100,
+              marginTop: 7,
+              marginLeft: 5,
+              marginRight: 5,
+              borderRadius: 5,
+              justifyContent: 'center',
+              padding:10
+            }}>
+
+            <Text
+              style={{
+                fontFamily: 'Lemon Regular',
+                fontSize: 20,
+                color: 'black',
+
+              }}
+            >Unit 1
+              
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toggleComponentVisibility}>
+          <View
+            style={{
+              backgroundColor: '#E4E2E2',
+              width:170,
+              height: 100,
+              marginTop: 7,
+              marginLeft: 5,
+              marginRight: 5,
+              borderRadius: 5,
+              justifyContent: 'center',
+              padding:10
+            }}>
+
+            <Text
+              style={{
+                fontFamily: 'Lemon Regular',
+                fontSize: 20,
+                color: 'black',
+
+              }}
+            >Unit 1
+              
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toggleComponentVisibility}>
+          <View
+            style={{
+              backgroundColor: '#E4E2E2',
+              width:170,
+              height: 100,
+              marginTop: 7,
+              marginLeft: 5,
+              marginRight: 5,
+              borderRadius: 5,
+              justifyContent: 'center',
+              padding:10
+            }}>
+
+            <Text
+              style={{
+                fontFamily: 'Lemon Regular',
+                fontSize: 20,
+                color: 'black',
+
+              }}
+            >Unit 1
+              
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
       
 

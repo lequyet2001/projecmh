@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, StyleSheet, Text, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, ImageBackground, Dimensions } from 'react-native';
 import Video from 'react-native-video';
 import Button from '../Component/Button';
 import Desciption from '../Component/Description';
@@ -20,15 +20,14 @@ export default function ScreenDefault({ navigation }: any): JSX.Element {
   }, [])
   return (
     <ImageBackground source={require('../../assets/image1.png')} style={styles.a}>
-      <View style={{ flex: 1, justifyContent: 'space-evenly', top: -100 }}>
-        <Desciption >
+      <View style={{ flex: 1,justifyContent:'space-around',top:-50  }}>
+        <Desciption style={{flex:0}}>
           Learn Together 
         </Desciption>
-        <View style={styles.container} >
+        <View style={[styles.container,{flex:0}]} >
           <Button title="Login" onPress={Login} styleButton={styles.button} sytleText={styles.text} />
           <Button title="SignUp" onPress={SignUp} styleButton={styles.button} sytleText={styles.text} />
         </View>
-
       </View>
     </ImageBackground>
   );
@@ -41,12 +40,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     padding: 10,
     flexDirection: 'row',
-    top: -80
+    // top: -80
   },
   a: {
     flex: 1,
-    resizeMode: 'cover', // or 'stretch'
+    // resizeMode: 'stretch', // or 'stretch'
     justifyContent: 'center', // Optional: align content vertically
+    display: 'flex',
+    width: Dimensions.get('window').width,
+    height:Dimensions.get('window').height,
     // top:-10
   },
   button: {

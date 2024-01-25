@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    width: 742.5/3.5,
-    height:140/3,
+    width: Dimensions.get('window').width * 0.5,
+    height: Dimensions.get('window').height * 0.065,
     backgroundColor: '#FAED92',
     elevation: 8,
     borderRadius: 30,

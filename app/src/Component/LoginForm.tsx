@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, Dimensions } from 'react-native';
 import getUser from '../data/user';
 import { NavigationContainer } from '@react-navigation/native';
 import LableInput from './LableInput';
@@ -7,8 +7,9 @@ import axios from 'axios';
 import CustomAlert from './CustomAlert';
 import Button from './Button';
 import { ip } from './ip';
-import {login} from '../fetchAPI/Login'
-
+import { login } from '../fetchAPI/Login'
+import { useDispatch, useSelector } from 'react-redux';
+import * as auth from '../redux/Actions/authActions';
 
 interface users {
   username: String;
@@ -23,11 +24,11 @@ export default function Form({ navigation }: { navigation: any }): JSX.Element {
   const [password, setPassword] = useState<string>('');
   const [isAlertVisible, setAlertVisible] = useState(false);
 
-  const [data, setData] = useState<users>();
+  // const [data1, setData] = useState<users>();
   const [msg, setMsg] = useState<string>('');
   const [bt, setbt] = useState<array[]>([]);
-
-
+  const { data, isLogin } = useSelector((state: any) => state.auth);
+  const dispatch = useDispatch();
   const handleLogin = async (): Promise<void> => {
     try {
       console.log({ ip })
@@ -43,44 +44,34 @@ export default function Form({ navigation }: { navigation: any }): JSX.Element {
         setAlertVisible(true)
         return;
       }
-      const response = await login(username, password);
+      const data = await login(username, password);
+      const response = data;
+      const responseData = response;
+      dispatch(auth.loginSuccess(responseData.user))
+      console.log(response)
+      if (responseData) {
+        // navigation.navigate('Home');
+        // setAlertVisible(true);
+        switch (response.status) {
+          case 200:
+            // if (responseData) {
+            navigation.navigate('Home');
+            // setAlertVisible(true);
+            // }
+            break;
 
-      const responseData = response.data;
-      console.log(responseData.status)
-      switch (response.data.status) {
-        case 200:
-          if (responseData) {
+          case 400:
             setMsg(responseData.msg);
-            setbt([{
-              text: 'Ok',
-              onPress() {
-                setAlertVisible(false);
-                navigation.navigate('Home');
-              },
-            }]);
+            setbt(array);
             setAlertVisible(true);
-          } else {
-            console.error('Invalid response data:', responseData);
-          }
-          break;
-
-        case 400:
-          setMsg(responseData.msg);
-          setbt(array);
-          setAlertVisible(true);
-          break;
-        case 500:
-          setMsg(responseData.msg);
-          setbt([{
-            text: 'Ok',
-            onPress() {
-              setAlertVisible(false);
-            },
-          }]);
-          setAlertVisible(true);
-          break;
-        default:
-          break;
+            break;
+         
+          default:
+            break;
+        }
+      }
+      else {
+        console.error('Invalid response data:', responseData);
       }
 
     } catch (error) {
@@ -102,10 +93,10 @@ export default function Form({ navigation }: { navigation: any }): JSX.Element {
   },]
   return (
     <View style={styles.container}>
-      <View style={{height:200}}>
+      <View style={{ height: Dimensions.get('window').height*0.2,justifyContent:'space-between' }}>
         <LableInput
           placeholder='Email or username'
-          style={styles.input}
+          // style={styles.input}
           secureTextEntry={false}
           value={username}
           onChangeText={(text: React.SetStateAction<string>) => setUsername(text)}
@@ -113,7 +104,7 @@ export default function Form({ navigation }: { navigation: any }): JSX.Element {
         />
         <LableInput
           placeholder='Password'
-          style={styles.input }
+          // style={styles.input}
           secureTextEntry={true}
           value={password}
           onChangeText={(text: React.SetStateAction<string>) => setPassword(text)}
@@ -124,7 +115,7 @@ export default function Form({ navigation }: { navigation: any }): JSX.Element {
       <CustomAlert
         visible={isAlertVisible}
         onClose={() => setAlertVisible(false)}
-        title="Thông báo"
+        title={msg}
         msg={msg}
         onConfirm={() => { setAlertVisible(false) }}
         key={Math.random()}
@@ -138,20 +129,20 @@ export default function Form({ navigation }: { navigation: any }): JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
-    // top:50,
-    // paddingBottom:50
+    justifyContent: 'space-evenly',
+
   },
   input: {
-    top: 35,
-    left: 20,
+    // top: 10,
+    // left: 20,
     fontSize: 20,
     fontFamily: 'Cantarell',
   },
   button: {
-    width: 742.5/3.5,
-    height:140/3,
+    width: Dimensions.get('window').width * 0.5,
+    height: Dimensions.get('window').height * 0.065,
     backgroundColor: '#FAED92',
     elevation: 8,
     borderRadius: 30,
@@ -159,20 +150,18 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     display: 'flex',
     justifyContent: 'center',
-    // alignItems: 'center'
+    alignItems: 'center'
   },
   text: {
     fontSize: 20,
     // fontWeight: 'bold',
-    color: 'white', // Màu chữ
-    textShadowColor: '#F15C56', // Màu viền chữ
-    textShadowOffset: { width: 5, height: 0 }, // Độ lệch của viền chữ
-    textShadowRadius: 1, // Bán kính mờ của viền chữ
-    paddingBottom: 10,
-  
-    fontFamily: 'Lemon Regular',
+    color: 'black', // Màu chữ
+
+    // paddingBottom: 10,
+
+    fontFamily: 'Canterell',
     textAlign: 'center',
-    bottom: -5,
-    left: -4,
+    // bottom: -5,
+    // left: -4,
   },
 });

@@ -7,7 +7,7 @@ module.exports = {
   password:'123',
   server:'localhost',
   port: 1433, // optional, defaults to 1433, better stored in an app setting such as process.env.DB_PORT
-  database: 'damn', // better stored in an app setting such as process.env.DB_NAME
+  database: 'DAMH', // better stored in an app setting such as process.env.DB_NAME
 
   options: {
       encrypt: true,

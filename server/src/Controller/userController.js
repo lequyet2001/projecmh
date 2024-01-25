@@ -31,20 +31,46 @@ const Login = async (req, res) => {
     await connectToDatabase();
 
     const { username, password } = req.query;
-    if(username==null||password==null){
-        return res.status(200).json({ msg: 'Please enter all fields',status:401});
+    if (username == null || password == null) {
+      return res.status(200).json({ msg: 'Please enter all fields', status: 400 });
     }
     const request = new sql.Request();
     const result = await request.query(query.LoginCheck(username, password));
-    if(result.recordset.length==0){
-        return res.status(200).json({ msg: 'User account or password incorrect',status:400 });
+    if (result.recordset.length == 0) {
+      return res.status(200).json({ msg: 'User account or password incorrect', status: 400 });
     }
-
+    const user_task = await request.query(query.user_Task(result.recordset[0].user_id));
+    const user_game_progress_false = await request.query(query.user_Game_Progress_False(result.recordset[0].user_id));
+    const user_game_progress_true = await request.query(query.user_Game_Progress_True(result.recordset[0].user_id));
+    const user_game_progress = await request.query(query.user_Game_Progress(result.recordset[0].user_id));
+    const all_game_Level = await request.query(query.all_game_Level());
+    const vocabulary = await request.query(query.vocabulary());
+    const Unit= await request.query(query.unit());
     console.log(query.LoginCheck(username, password));
-    res.status(200).send(JSON.stringify({ user: result.recordset, msg: 'Login success',status:200 }));
+    const user = {
+      user: {
+        user: result.recordset,
+        user_task: user_task.recordset,
+        gameProgress: {
+          true: user_game_progress_true.recordset,
+          false: user_game_progress_false.recordset,
+          true_new: user_game_progress.recordset,
+          all_level: all_game_Level.recordset,
+        },
+        app:{
+          Vocabulary:vocabulary.recordset,
+          Story:2,
+          Unit:Unit.recordset,
+  
+        },
+      },
+      
+      msg: 'Login success', status: 200
+    }
+    res.status(200).send(JSON.stringify(user));
   } catch (err) {
     console.error('Error in Login:', err.message);
-    res.status(500).send({ msg: err.name+": "+err.message});
+    res.status(500).send({ msg: err.name + ": " + err.message });
   }
 };
 
@@ -53,70 +79,76 @@ const Signin = async (req, res) => {
     await connectToDatabase();
 
     const { username, password, email, password2 } = req.body;
-    if(username==null||password==null||email==null||password2==null){
-        return res.status(200).json({ msg: 'Please enter all fields',status:401 });
+    if (username == null || password == null || email == null || password2 == null) {
+      return res.status(200).json({ msg: 'Please enter all fields', status: 400 });
     }
 
     if (password !== password2) {
-      return res.status(200).json({ msg: 'Password do not match',status:400 });
+      return res.status(200).json({ msg: 'Password do not match', status: 400 });
     }
 
     const request = new sql.Request();
-    const result = await request.query(query.Signin(username, password, email));
-    
+    const emailCheck = await request.query(query.EmailCheck(email));
+    if (emailCheck.recordset.length > 0) {
+      return res.status(200).json({ msg: 'Email already exists', status: 400 });
+    }
+    const usernameCheck = await request.query(query.UserCheck(username));//check username
 
-    
-    res.status(200).send(JSON.stringify({ msg: 'Signin Success' ,status:200}));
+    if (usernameCheck.recordset.length > 0) {
+      return res.status(200).json({ msg: 'Username already exists', status: 400 });
+    }
+
+    const result = await request.query(query.Signin(username, password, email));
+
+    res.status(200).send(JSON.stringify({ msg: 'Signin Success', status: 200 }));
+
+
+
+
   } catch (err) {
     console.error('Error in Signin:', err.message);
     res.status(500).send(JSON.stringify({ msg: err.name }));
   }
 };
 
-const Check1 = async (req, res) => {
+const getUser = async (req, res) => {
   try {
     await connectToDatabase();
-
-    const email = req.query.email;
-    if(email==null){
-        return res.status(200).json({ msg: 'Please enter all fields' ,status:400});
+    const { user_id } = req.params;
+    // const id=parseInt(user_id);
+    const id = user_id;
+    console.log(user_id[3]);
+    if (id == null) {
+      return res.status(200).json({ msg: 'Please enter all fields', status: 400 });
     }
     const request = new sql.Request();
-    const result = await request.query(query.EmailCheck(email));
-    if(result.recordset.length==0){
-        return res.status(200).send(JSON.stringify({ msg: 'Email không tồn tại',status:200 }));
-    }
-    res.status(200).send(JSON.stringify({ msg: 'Email đã tồn tại',status:201 }));
+    const result = await request.query(query.getUser(id));
+    const user_task = await request.query(query.user_Task(id));
+    const user_game_progress_false = await request.query(query.user_Game_Progress_False(id));
+    const user_game_progress_true = await request.query(query.user_Game_Progress_True(id));
+    const user_game_progress = await request.query(query.user_Game_Progress(id));
+    res.status(200).send(JSON.stringify({
+      user: {
+        user: result.recordset,
+        user_task: user_task.recordset,
+        gameProgress: {
+          true: user_game_progress_true.recordset,
+          false: user_game_progress_false.recordset,
+          true_new: user_game_progress_true.recordset,
+        }
+      },
+      msg: 'Success'
+    }));
   } catch (err) {
-    console.error('Error in EmailCheck:', err.message);
-    res.status(500).send(JSON.stringify({ msg: err.message }));
+    console.error('Error in getUser:', err.message);
+    res.status(500).send('Failed to execute query');
   }
 };
-const Check2 = async (req, res) => {
-    try {
-      await connectToDatabase();
-  
-      const email = req.query.username;
-      if(email==null){
-          return res.status(200).json({ msg: 'Please enter all fields' ,status:400});
-      }
-      const request = new sql.Request();
-      const result = await request.query(query.UserCheck(email));
-      if(result.recordset.length==0){
-        return res.status(200).send(JSON.stringify({ msg: 'Username không tồn tại',status:200 }));
-    }
-    res.status(200).send(JSON.stringify({ msg: 'Username đã tồn tại',status:201 }));
-    } catch (err) {
-      console.error('Error in EmailCheck:', err.message);
-      res.status(500).send(JSON.stringify({ msg: err.message }));
-    }
-  };
-  
 
 module.exports = {
   getAllUsers,
+  getUser,
   Login,
   Signin,
-  Check1,
-  Check2
+
 };

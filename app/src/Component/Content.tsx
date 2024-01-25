@@ -3,16 +3,19 @@ import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 import Description from './Description';
 
 export interface FormContainerProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   desc?: string;
   children2?: () => React.ReactNode;
   backgroundColor?:string;
   DescBackgroundColor?:string;
   contetnBackGroundColor?:string;
   width?:number;
+  w?:number;
+  h?:number;
+  p?:string;
 }
 
-export default function Content({width, DescBackgroundColor,children, desc, children2,backgroundColor ,contetnBackGroundColor}: FormContainerProps) {
+export default function Content({width, DescBackgroundColor,children, desc, children2,backgroundColor ,contetnBackGroundColor,w,h,p}: FormContainerProps) {
   const a = children2 ? children2() : null;
 
   return (
@@ -22,6 +25,7 @@ export default function Content({width, DescBackgroundColor,children, desc, chil
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
         backgroundColor: backgroundColor,
+        position:p?p:'relative',
       }}
     >
       <View
@@ -30,9 +34,9 @@ export default function Content({width, DescBackgroundColor,children, desc, chil
           height: 400 / 2.6,
         }}
       >
-        <Description fontSize={40} width={width} top={12}>
+       {desc? <Description fontSize={40} width={width} top={12}>
           {desc}
-        </Description>
+        </Description>:null}
       </View>
       <View
         style={{
@@ -47,8 +51,8 @@ export default function Content({width, DescBackgroundColor,children, desc, chil
             borderColor: 'white',
             borderWidth: 5,
             borderStyle: 'solid',
-            width: Dimensions.get('window').width - 10,
-            height: 430,
+            width:w?w: Dimensions.get('window').width - 10,
+            height:h?h: 430,
             borderRadius: 10,
             top:5
           }}

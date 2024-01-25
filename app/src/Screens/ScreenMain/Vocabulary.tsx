@@ -5,6 +5,7 @@ import Content from '../../Component/Content'
 import { StyleSheet } from 'react-native'
 import Button from '../../Component/Button'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useSelector } from 'react-redux'
 
 
 export default function Vocabulary({navigation}:any) {
@@ -14,8 +15,9 @@ export default function Vocabulary({navigation}:any) {
     setComponentVisible(!isComponentVisible);
   };
 
-
-  
+  const {data,isLogin}=useSelector((state:any)=>state.auth);
+  // console.log(JSON.stringify(data))
+  // console.log(isLogin)
 const buttonGroup=()=>{
   return ( 
   <View style={{
@@ -37,7 +39,6 @@ const buttonGroup=()=>{
             backgroundColor: '#1B92FF',
             width: 50,
             height: 50,
-
             justifyContent: 'center',
             alignItems: 'center'
           }}>
@@ -47,7 +48,7 @@ const buttonGroup=()=>{
       }}
     />
     <Button
-    onPress={()=>navigation.navigate('Game')}
+    onPress={()=>navigation.navigate('GameLevel')}
       title='Play Game'
       styleButton={styles.button}
       sytleText={styles.text}
@@ -117,7 +118,6 @@ const buttonGroup=()=>{
               • asds
             </Text>
         }
-
       </View>
       
 

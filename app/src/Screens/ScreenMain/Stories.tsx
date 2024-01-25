@@ -25,7 +25,7 @@ export default function Vocabulary({ navigation }: any) {
           )}
         />
         <Button
-          onPress={() => navigation.navigate('Game')}
+          onPress={() => navigation.navigate('GameLevel')}
           title='Play Game'
           styleButton={styles.button}
           styleText={styles.text}

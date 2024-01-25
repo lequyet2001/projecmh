@@ -7,8 +7,13 @@ import { useState } from 'react';
 import CustomAlert from './CustomAlert';
 import LableInput from './LableInput';
 // import { ScrollView } from 'react-native-reanimated/lib/typescript/Animated';
-import { DrawerModel } from './ModelScreens/ModelInformation';
-
+import { DrawerModel, DrawerModelEditAvatar, DrawerModelEditInfo } from './ModelScreens/ModelInformation';
+import DrawerModelSetting from './ModelScreens/ModelSetting';
+import DrawerMoaelAchievements from './ModelScreens/ModelAchievements';
+import DrawerModelFavorite from './ModelScreens/ModelFavorite';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOGOUT } from '../redux/ActionsType';
+import * as auth from '../redux/Actions/authActions';
 interface users {
     username: String;
     password: String;
@@ -25,19 +30,21 @@ interface array {
 export default function CustomDrawerContent(props: any) {
     const navigation = useNavigation();
     const [hover, setHover] = useState(false);
-    const [isModelVisible, setModelVisible] = useState({
-        visible: false,
-        editVisible: false
+    const [drawer, setDrawer] = useState(false);
+    const [editAvata, setEditAvata] = useState(false);
+    const [editInfo,setEditInfor] = useState(false);
+    const [editSetting,setEditSetting] = useState(false);
+    const [Achievements, setAchievements] = useState(false)
+    const [favorite, setFavorite] = useState(false);
 
-    });
-
-    const [data, setData] = useState<users>();
     const [msg, setMsg] = useState<string>('');
     const [bt, setbt] = useState<array[]>([]);
+    const dispatch = useDispatch();
+    const {data}=useSelector((state:any)=>state.auth);
     const DrawerGroup = [
         {
             lable: 'Favorite',
-            // onPress: () => setModelVisible(true),
+            onPress: () => setFavorite(true),
             pressColor: '#fff1',
             labelStyle: styles.labelStyle,
             style: styles.style,
@@ -49,7 +56,7 @@ export default function CustomDrawerContent(props: any) {
         },
         {
             lable: 'Achievements',
-            // onPress: () => setModelVisible(true),
+            onPress: () => setAchievements(true),
             pressColor: '#fff1',
             labelStyle: styles.labelStyle,
             style: styles.style,
@@ -61,7 +68,7 @@ export default function CustomDrawerContent(props: any) {
         },
         {
             lable: 'Information',
-            onPress: () => setModelVisible(true),
+            onPress: () => setDrawer(true),
             pressColor: '#fff1',
             labelStyle: styles.labelStyle,
             style: styles.style,
@@ -73,7 +80,7 @@ export default function CustomDrawerContent(props: any) {
         },
         {
             lable: 'Setting',
-            // onPress: () => setModelVisible(true),
+            onPress: () => setEditSetting(true),
             pressColor: '#fff1',
             labelStyle: styles.labelStyle,
             style: styles.style,
@@ -82,36 +89,46 @@ export default function CustomDrawerContent(props: any) {
                     <MaterialIcons name="settings" size={30} color="black" style={{ left: 15, color: 'white' }} />
                 </>)
             }
-        }
+        }, 
+        {
+            lable: 'Logout',
+            onPress: () =>dispatch(auth.logout()),
+            pressColor: '#fff1',
+            labelStyle: styles.labelStyle,
+            style: styles.style,
+            icon: () => {
+                return (<>
+                    <MaterialIcons name="info" size={30} color="black" style={{ left: 15, color: 'white' }} />
+                </>)
+            }
+        },
     ]
-
-
+    const user=data?.user[0];
+    const level=data?.gameProgress?.true_new[0]?.level
+    // console.log(level)
     return (
         <DrawerContentScrollView {...props} contentContainerStyle={{ ':hover': { backgroundColor: 'back' } }}>
             <View style={{ height: 200, backgroundColor: '#561735', paddingTop: 10 }}>
                 <View style={{ display: 'flex', flexDirection: 'row', }}>
 
-                    <Image source={require('../../assets/avata.jpg')} style={{ left: 5, width: 80, height: 80, borderRadius: 40, marginBottom: 10, zIndex: 999, borderColor: '#fff', borderWidth: 5 }} />
+                    <Image  source={{uri:user?.avatar}}
+                     style={{ left: 5, width: 80, height: 80, borderRadius: 40, marginBottom: 10, zIndex: 999, borderColor: '#fff', borderWidth: 5 }} />
                     <View style={{ top: 15, backgroundColor: '#ccc', height: 50, justifyContent: 'center', alignItems: 'flex-end', borderRadius: 60, width: 300, left: -100, borderWidth: 4, borderColor: '#FAED92' }}>
                         <View style={{ width: 150, alignItems: 'center' }}>
-                            <Text style={{ color: 'white', fontSize: 15, fontFamily: 'Lemon Regular', left: -25 }}>Le Thuy</Text>
+                            <Text style={{ color: 'white', fontSize: 15, fontFamily: 'Lemon Regular', left: -25 }}>{user?.nickname}</Text>
                         </View>
                     </View>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', width: 300, paddingLeft: 10, paddingTop: 20, justifyContent: 'space-around' }}>
-                    <Text style={{ color: '#5997F1', fontFamily: 'Lemon Regular', fontSize: 10 }}>Score:
+                    
+                    <Text style={{ color: '#7FB73D', fontFamily: 'Lemon Regular', fontSize: 15 }}>Level: 
                         <Text style={{ color: 'blue' }}>
-                            12as345
+                            {level}
                         </Text>
                     </Text>
-                    <Text style={{ color: '#7FB73D', fontFamily: 'Lemon Regular', fontSize: 10 }}>Level:
+                    <Text style={{ color: 'green', fontFamily: 'Lemon Regular', fontSize: 15 }}>Coins: 
                         <Text style={{ color: 'blue' }}>
-                            12as345
-                        </Text>
-                    </Text>
-                    <Text style={{ color: 'green', fontFamily: 'Lemon Regular', fontSize: 10 }}>Coins:
-                        <Text style={{ color: 'blue' }}>
-                            12as345
+                            {user?.coins}
                         </Text>
                     </Text>
                 </View>
@@ -133,13 +150,33 @@ export default function CustomDrawerContent(props: any) {
                 })
             }
             <DrawerModel
-                editOnPress={() => setModelVisible({visible:false,editVisible:true})}
-                editVisible={isModelVisible.editVisible}
-                editOnRequestClose={() => setModelVisible((prev) => ({ ...prev, editVisible: false }))}
-
-                onPress={() => setModelVisible((prev) => ({ ...prev, visible: false }))}
-                visible={isModelVisible.visible}
-                onRequestClose={() => setModelVisible((prev) => ({ ...prev, visible: false }))} 
+                onPress={() => setDrawer(false)}
+                visible={drawer}
+                onRequestClose={() => setDrawer(false)}
+                editAvata={() => setEditAvata(true)}
+                editInfo={() => setEditInfor(true)}
+            />
+            <DrawerModelEditAvatar
+                onPress={() => setEditAvata(false)}
+                visible={editAvata}
+                onRequestClose={() => setEditAvata(false)} />
+            <DrawerModelEditInfo
+                onPress={() => setEditInfor(false)}
+                visible={editInfo}
+                onRequestClose={() => setEditInfor(false)} />
+            <DrawerModelSetting
+                onPress={() => setEditSetting(false)}
+                visible={editSetting}
+                onRequestClose={() => setEditSetting(false)}
+            />
+            <DrawerMoaelAchievements
+                onPress={() => setAchievements(false)}
+                visible={Achievements}
+                onRequestClose={() => setAchievements(false)}/>
+            <DrawerModelFavorite
+                onPress={() => setFavorite(false)}
+                visible={favorite}
+                onRequestClose={() => setFavorite(false)}
             />
         </DrawerContentScrollView>
     );

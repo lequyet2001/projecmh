@@ -1,10 +1,11 @@
-import { Image, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Dimensions, Image, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import LableInput from '../LableInput';
 import { useMemo, useState } from "react";
 import RadioGroup from 'react-native-radio-buttons-group';
 import CheckBox from '../CheckBox'
 import Button from "../Button";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 type visibleProp = {
     visible: boolean;
@@ -13,12 +14,16 @@ type visibleProp = {
     editVisible?: boolean;
     editOnRequestClose?: () => void;
     editOnPress?: () => void;
+    editAvata?: () => void;
+    editInfo?: () => void;
 }
-
+const edit = require('../../../assets/Edit.png');
 
 export const DrawerModel: React.FC<visibleProp> = (props) => {
-
-    const { visible, onRequestClose, onPress, editOnPress, editOnRequestClose, editVisible } = props;
+    const {data}=useSelector((state:any)=>state.auth);
+    const { visible, onRequestClose, onPress } = props;
+    // console.log(data?.user[0])
+    const user=data?.user[0];
     return (<>
         <Modal
             animationType="slide"
@@ -41,11 +46,12 @@ export const DrawerModel: React.FC<visibleProp> = (props) => {
                     borderWidth: 5,
                     padding: 20,
                     alignItems: 'center',
-                    height: 600,
-                    width: 350,
+                    height: Dimensions.get('window').height*0.8,
+                    width: Dimensions.get('window').width*0.9,
+                    // position:'absolute'
                 }}>
                     <View style={{ display: 'flex', flexDirection: 'row', left: 0 }}>
-                        <Image source={require('../../../assets/avata.jpg')}
+                        <Image source={{uri:user?.avatar}}
                             style={{
                                 left: 0,
                                 width: 80,
@@ -54,7 +60,8 @@ export const DrawerModel: React.FC<visibleProp> = (props) => {
                                 marginBottom: 10,
                                 zIndex: 2,
                                 borderColor: '#fff',
-                                borderWidth: 5
+                                borderWidth: 5,
+                                // position: 'absolute',
                             }} />
                         <View
                             style={{
@@ -70,67 +77,71 @@ export const DrawerModel: React.FC<visibleProp> = (props) => {
                                 borderColor: '#FAED92'
                             }}>
                             <View style={{ width: 150, alignItems: 'center' }}>
-                                <Text style={{ color: 'white', fontSize: 15, fontFamily: 'Lemon Regular', left: -25 }}>Le ádasdasdsaThuy</Text>
+                                <Text style={{ color: 'white', fontSize: 15, fontFamily: 'Lemon Regular', left: -25 }}>{user?.nickname}</Text>
                             </View>
                         </View>
                     </View>
                     <View
-
-                        style={{
-                            // alignItems: 'flex-end',
+                        style={{                    
                             alignSelf: 'flex-end',
-                            left: 10,
-                            bottom: 65,
-                            // backgroundColor: 'red',
-                            borderRadius: 100,
-                            // width:40,
-                            // height:0,
+                            right: 10,
+                            top: 30,                 
+                            borderRadius: 100,                   
+                            position: 'absolute',
                         }}>
                         <TouchableOpacity onPress={onPress}>
                             <Image source={require('../../../assets/Close.png')} style={{ width: 30, height: 30 }} />
                         </TouchableOpacity>
                     </View>
                     <View style={{
-                        // alignItems: 'flex-end',
+                        // alignSeft: 'flex-end',
                         alignSelf: 'flex-end',
-                        left: -230,
-                        bottom: 70,
+                        left:60,
+                        top: 70,
                         zIndex: 999,
                         // backgroundColor: 'red',
                         borderRadius: 100,
-                        // width:40,
-                        // height:0,
+                        position: 'absolute',
+                        // width:'100%'
                     }}>
-                        <TouchableOpacity onPress={editOnPress} >
+                        <TouchableOpacity onPress={props.editAvata} >
                             <Image source={require('../../../assets/Restart.png')} style={{ width: 40, height: 40 }} />
                         </TouchableOpacity>
                     </View>
-                    <View style={{ alignItems: 'flex-end', width: '100%', bottom: 70 }}>
-                        <Text style={{ textDecorationLine: 'underline', fontWeight: 'bold', color: 'black', fontSize: 20 }}>Edit Infomation
+                    <View style={{ 
+                        alignSelf: 'flex-end', 
+                        width: 'auto' ,
+                        position:'absolute',
+                        top:60,
+                        right:10
+                        }}>
+                        <TouchableOpacity onPress={props.editInfo} >
                             <Image source={require('../../../assets/Edit.png')} style={{ width: 30, height: 30 }} />
-                        </Text>
+                        </TouchableOpacity>
                     </View>
 
-                    <View style={{ height: 400, bottom: 80 }} >
-                        <LableInput style={styles.input} Lable="Username" />
-                        <LableInput style={styles.input} Lable="Username" />
-                        <LableInput style={styles.input} Lable="Username" />
-                        <LableInput style={styles.input} Lable="Username" />
-                        <LableInput style={styles.input} Lable="Username" />
-                        <LableInput style={styles.input} Lable="Username" />
+                    <View style={{
+                        height: Dimensions.get('window').height*0.6,
+                        justifyContent:'space-evenly',
+                        top:-20
+                        }} >
+
+                        <LableInput canEdit={false} style={styles.input} placeholder={user.full_name}  Lable="Name"/>
+                        <LableInput canEdit={false} style={styles.input} placeholder={user?.date_of_birth} Lable="Date of birth"/>
+                        <LableInput canEdit={false} style={styles.input} placeholder={user?.nickname} Lable="Nickname"/>
+                        <LableInput canEdit={false} style={[styles.input]} placeholder={user?.avatar} Lable="Link avatar"/>
+                        <LableInput canEdit={false} style={styles.input} placeholder={user?.email} Lable="Email"/>
+                        <LableInput canEdit={false} style={styles.input} placeholder={user?.phone_number}Lable="Phone number" />
                     </View>
                 </View>
             </View>
-            <DrawerModelEditAvatar
-                visible={editVisible}
-                onRequestClose={editOnRequestClose}
-            />
         </Modal>
+
 
     </>)
 }
 export const DrawerModelEditAvatar = ({ visible, onRequestClose, onPress }: any) => {
-    const [avata,setAvata]=useState(null);
+    const [avata, setAvata] = useState(null);
 
     const [checked, setChecked] = useState({
         button1: false,
@@ -152,28 +163,36 @@ export const DrawerModelEditAvatar = ({ visible, onRequestClose, onPress }: any)
     }
 
     const icon = [
-
         {
-            id:1,
+            id: 1,
             title: 'MAM',
-            src: require('../../../assets/MAM.png') },
+            src: require('../../../assets/MAM.png')
+        },
         {
-            id:2,
+            id: 2,
             title: 'image1',
-            src: require('../../../assets/image1.png')    },
+            src: require('../../../assets/image1.png')
+        },
         {
-            id:3,
+            id: 3,
             title: 'Search',
-            src: require('../../../assets/Search.png')    },
+            src: require('../../../assets/Search.png')
+        },
         {
-            id:4,
+            id: 4,
             title: 'Rectangle71',
             src: require('../../../assets/Rectangle71.png')
         },
         {
+            id: 5,
             title: 'Rectangle82',
             src: require('../../../assets/Rectangle82.png')
         },
+        {
+            id: 6,
+            title: 'Edit    ',
+            src: edit,
+        }
     ]
     return (<>
 
@@ -225,8 +244,8 @@ export const DrawerModelEditAvatar = ({ visible, onRequestClose, onPress }: any)
                             flexWrap: 'wrap'
                         }} >
                             {
-                                icon.map((e,index) => {
-                                    return (<> 
+                                icon.map((e, index) => {
+                                    return (<>
                                         <Button onPress={() => {
                                             setChecked({
                                                 button1: true,
@@ -235,8 +254,8 @@ export const DrawerModelEditAvatar = ({ visible, onRequestClose, onPress }: any)
                                             setAvata(e.title)
                                             console.log(avata)
 
-                                        }} 
-                                        key={e.title}
+                                        }}
+                                            key={e.title}
                                             icon={() => {
                                                 return (<>
                                                     <Image source={e.src} style={{ width: 70, height: 70 }} />
@@ -277,6 +296,7 @@ export const DrawerModelEditAvatar = ({ visible, onRequestClose, onPress }: any)
                             <Button title='Cancel'
                                 styleButton={[styles.button, { backgroundColor: '#B92323', }]}
                                 sytleText={[styles.text]}
+                                onPress={onPress}
                             />
                         </View>
                     </View>
@@ -289,14 +309,95 @@ export const DrawerModelEditAvatar = ({ visible, onRequestClose, onPress }: any)
 }
 
 
+export const DrawerModelEditInfo: React.FC<visibleProp> = (props) => {
+    const [name,setName]=useState<string>('');
+    const [date_of_birth,setDateOfBirth]=useState<string>('');
+    const [nickname,setNickname]=useState<string>('');
+    const [password,setPassword]=useState<string>('');
+    const [avatar,setAvatar]=useState<string>('');
+    const [email,setEmail]=useState<string>('');
+    const [phone_number,setPhonenumber]=useState<string>('');
+    const { visible, onRequestClose, onPress } = props;
+    console.log({name,date_of_birth,nickname,password,avatar,email,phone_number})
+    return (<>
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={visible}
+            onRequestClose={onRequestClose}
+        >
+
+            <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+            }}>
+
+                <View style={{
+                    backgroundColor: '#44EBE1',
+                    borderRadius: 40,
+                    borderColor: 'white',
+                    borderWidth: 5,
+                    padding: 20,
+                    alignItems: 'center',
+                    height: Dimensions.get('window').height*0.8,
+                    width: Dimensions.get('window').width*0.9,
+                    // position:'absolute'
+                }}>
+
+
+                    <View style={{
+                        height: Dimensions.get('window').height*0.7,
+                        justifyContent:'space-evenly',
+                        top:Dimensions.get('window').height*-0.02
+                        }} >
+                        <LableInput style={styles.input} Lable="Name"  placeholder={name}  onChangeText={(text:React.SetStateAction<string>)=>setName(text)}/>
+                        <LableInput style={styles.input} Lable="Date of birth" placeholder={date_of_birth}  onChangeText={(text:React.SetStateAction<string>)=>setDateOfBirth(text)}/>
+                        <LableInput style={styles.input} Lable="Nickname" placeholder={nickname} onChangeText={(text:React.SetStateAction<string>)=>setNickname(text)} />
+                        <LableInput style={styles.input} Lable="Password" placeholder={password} onChangeText={(text:React.SetStateAction<string>)=>setPassword(text)} />
+                        <LableInput style={styles.input} Lable="Link avatar"  placeholder={avatar} onChangeText={(text:React.SetStateAction<string>)=>setAvatar(text)} />
+                        <LableInput style={styles.input} Lable="Email" placeholder={email} onChangeText={(text:React.SetStateAction<string>)=>setEmail(text)} />
+                        <LableInput style={styles.input} Lable="Phone Number" placeholder={phone_number} onChangeText={(text:React.SetStateAction<string>)=>setPhonenumber(text)} />
+                    </View>
+                    <View style={{
+                        // backgroundColor: 'white',
+                        // borderColor: 'black',
+                        // borderWidth: 3,
+                        // borderRadius: 20,
+                        width: 320,
+                        height: 'auto',
+                        // gap: 20,
+                        top: -10
+                    }}>
+                        <View style={{ width: 320, display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+
+                            <Button title='Save'
+                                styleButton={[styles.button, { backgroundColor: '#1B92FF', }]}
+                                sytleText={[styles.text]}
+                            />
+                            <Button title='Cancel'
+                                styleButton={[styles.button, { backgroundColor: '#B92323', }]}
+                                sytleText={[styles.text]}
+                                onPress={onPress}
+                            />
+                        </View>
+                    </View>
+                </View>
+            </View>
+        </Modal>
+
+
+    </>)
+}
 
 
 const styles = StyleSheet.create({
     input: {
-        top: 35,
-        left: 20,
-        fontSize: 20,
-        fontFamily: 'Cantarell',
+        // top: 25,
+        // left: 20,
+        // fontSize: 20,
+        // fontFamily: 'Cantarell',
     },
     labelStyle: {
         fontSize: 20,
